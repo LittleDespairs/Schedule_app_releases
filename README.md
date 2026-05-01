@@ -4,6 +4,15 @@ Public release channel for Schedule App Windows installers.
 
 This repository stores release assets only. Source code remains private.
 
+## 0.15.7_beta - 2026-05-01
+
+- Fixed the hosted employee portal login layout so the call-to-action no longer overlaps the text panel.
+- Treated `portal.shiftcare.co.il` as a hosted cloud origin in the auth client.
+- Updated Cloud Build defaults to use `https://portal.shiftcare.co.il`.
+- Updated installer metadata to `0.15.7_beta`.
+
+Installer asset: `ShiftCare_Setup_0.15.7-beta.exe`
+
 ## 0.15.6_beta - 2026-05-01
 
 - Polished the Organization page with a language switcher and complete RU/EN/HE translations.
