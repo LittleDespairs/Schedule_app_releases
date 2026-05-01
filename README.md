@@ -4,6 +4,15 @@ Public release channel for Schedule App Windows installers.
 
 This repository stores release assets only. Source code remains private.
 
+## 0.15.6_beta - 2026-05-01
+
+- Polished the Organization page with a language switcher and complete RU/EN/HE translations.
+- Employee portal and invitation links now display as full URLs with open/copy actions.
+- Desktop builds now fall back to `https://portal.shiftcare.co.il` for employee portal links.
+- Updated installer metadata to `0.15.6_beta`.
+
+Installer asset: `ShiftCare_Setup_0.15.6-beta.exe`
+
 ## 0.15.5_beta - 2026-05-01
 
 - Added local license runtime, trial/grace/expiry enforcement, and employee-limit checks.
