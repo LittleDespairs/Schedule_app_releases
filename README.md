@@ -4,6 +4,16 @@ Public release channel for Schedule App Windows installers.
 
 This repository stores release assets only. Source code remains private.
 
+## 0.15.8_beta - 2026-05-02
+
+- Stabilized sidebar navigation alignment, active states, and icon ordering.
+- Added standard Organization sidebar collapse behavior and translated Organization labels.
+- Fixed missing translation keys that could appear as raw technical IDs.
+- Removed mobile horizontal overflow from Organization, support, and directory pages.
+- Updated installer metadata to `0.15.8_beta`.
+
+Installer asset: `ShiftCare_Setup_0.15.8-beta.exe`
+
 ## 0.15.7_beta - 2026-05-01
 
 - Fixed the hosted employee portal login layout so the call-to-action no longer overlaps the text panel.
