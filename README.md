@@ -4,6 +4,15 @@ Public release channel for Schedule App Windows installers.
 
 This repository stores release assets only. Source code remains private.
 
+## 0.15.9_beta - 2026-05-02
+
+- Fixed sidebar navigation becoming unclickable after the 0.15.8 UI polish.
+- Stopped access-control normalization from repeatedly replacing sidebar links.
+- Kept role-based navigation order and icons stable without recreating link DOM nodes every observer pass.
+- Updated installer metadata to `0.15.9_beta`.
+
+Installer asset: `ShiftCare_Setup_0.15.9-beta.exe`
+
 ## 0.15.8_beta - 2026-05-02
 
 - Stabilized sidebar navigation alignment, active states, and icon ordering.
