@@ -4,6 +4,15 @@ Public release channel for Schedule App Windows installers.
 
 This repository stores release assets only. Source code remains private.
 
+## 0.15.10_beta - 2026-05-03
+
+- Fixed the Organization invite employee selector placeholder translation.
+- Renamed the Russian employee ID-card table column to avoid a duplicate `ID / ID` header.
+- Render empty employee ID-card values as a dash instead of a blank cell.
+- Updated installer metadata to `0.15.10_beta`.
+
+Installer asset: `ShiftCare_Setup_0.15.10-beta.exe`
+
 ## 0.15.9_beta - 2026-05-02
 
 - Fixed sidebar navigation becoming unclickable after the 0.15.8 UI polish.
