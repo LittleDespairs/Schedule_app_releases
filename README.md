@@ -4,6 +4,8 @@ Public release channel for Schedule App Windows installers.
 
 This repository stores release assets only. Source code remains private.
 
+Download page: https://download.shiftcare.co.il/
+
 ## 0.15.10_beta - 2026-05-03
 
 - Fixed the Organization invite employee selector placeholder translation.
