@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ShiftCare - скачать программу</title>
+  <meta name="description" content="Скачать ShiftCare для Windows. Локальное рабочее пространство расписаний для команд ухода.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f3f6fb;
+      --card: #ffffff;
+      --text: #101b33;
+      --muted: #63718a;
+      --line: #d9e2ef;
+      --primary: #2b59d9;
+      --primary-dark: #2148b8;
+      --soft: #eef4ff;
+      --success: #138a4a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    main {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 18px;
+    }
+
+    .shell {
+      width: min(920px, 100%);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 22px 70px rgba(19, 30, 55, 0.10);
+      overflow: hidden;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      padding: 44px;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .logo {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 800;
+      font-size: 24px;
+      letter-spacing: 0;
+      box-shadow: 0 14px 28px rgba(43, 89, 217, 0.25);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .lead {
+      margin: 0 0 28px;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.55;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-size: 16px;
+      font-weight: 750;
+      text-decoration: none;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 16px 28px rgba(43, 89, 217, 0.22);
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .button-secondary {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    .version {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      background: linear-gradient(180deg, #ffffff 0%, var(--soft) 100%);
+    }
+
+    .panel h2 {
+      margin: 0 0 14px;
+      font-size: 18px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .steps li {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--primary);
+      border: 1px solid var(--line);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 44px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      background: #fbfdff;
+    }
+
+    .footer a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .status {
+      color: var(--success);
+      font-weight: 800;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 28px;
+      }
+
+      .brand h1 {
+        font-size: 30px;
+      }
+
+      .lead {
+        font-size: 18px;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .footer {
+        flex-direction: column;
+        padding: 18px 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="shell" aria-labelledby="title">
+      <div class="hero">
+        <div>
+          <div class="brand">
+            <div class="logo" aria-hidden="true">SC</div>
+            <div>
+              <h1 id="title">ShiftCare</h1>
+              <p>Windows beta</p>
+            </div>
+          </div>
+
+          <p class="lead">
+            Локальное рабочее пространство расписаний для домов престарелых и команд ухода.
+            Программа работает на компьютере, а облако используется для входа сотрудников и резервных данных.
+          </p>
+
+          <div class="actions">
+            <a class="button button-primary" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/download/v0.15.10-beta/ShiftCare_Setup_0.15.10-beta.exe">
+              Скачать для Windows
+            </a>
+            <a class="button button-secondary" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/tag/v0.15.10-beta">
+              Открыть релиз
+            </a>
+          </div>
+
+          <div class="version">Текущая версия: <strong>0.15.10 beta</strong></div>
+        </div>
+
+        <aside class="panel" aria-label="Как установить">
+          <h2>Установка</h2>
+          <ol class="steps">
+            <li><span class="step-number">1</span><span>Скачайте установщик ShiftCare для Windows.</span></li>
+            <li><span class="step-number">2</span><span>Запустите файл <strong>ShiftCare_Setup_0.15.10-beta.exe</strong>.</span></li>
+            <li><span class="step-number">3</span><span>После установки войдите в организацию или создайте новую рабочую базу.</span></li>
+          </ol>
+        </aside>
+      </div>
+
+      <div class="footer">
+        <span><span class="status">Готово к установке</span> на Windows 10/11.</span>
+        <a href="https://portal.shiftcare.co.il/login">Портал сотрудников</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
