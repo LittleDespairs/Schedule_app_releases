@@ -319,83 +319,90 @@
           </p>
 
           <div class="actions">
-            <a class="button button-primary" data-i18n="download" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/download/v0.15.10-beta/ShiftCare_Setup_0.15.10-beta.exe">
+            <a class="button button-primary" data-i18n="download" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/download/v0.15.11-beta/ShiftCare_Setup_0.15.11-beta.exe">
               Скачать для Windows
             </a>
-            <a class="button button-secondary" data-i18n="release" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/tag/v0.15.10-beta">
+            <a class="button button-secondary" data-i18n="download_android" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/download/v0.15.11-beta/ShiftCare_Android_0.15.11-beta.apk">
+              Скачать для Android
+            </a>
+            <a class="button button-secondary" data-i18n="release" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/tag/v0.15.11-beta">
               Открыть релиз
             </a>
           </div>
 
-          <div class="version"><span data-i18n="version_label">Текущая версия:</span> <strong>0.15.10 beta</strong></div>
+          <div class="version"><span data-i18n="version_label">Текущая версия:</span> <strong>0.15.11 beta</strong></div>
         </div>
 
         <aside class="panel" aria-label="Installation">
           <h2 data-i18n="install_title">Установка</h2>
           <ol class="steps">
-            <li><span class="step-number">1</span><span data-i18n="step_1">Скачайте установщик ShiftCare для Windows.</span></li>
-            <li><span class="step-number">2</span><span data-i18n="step_2">Запустите файл <strong>ShiftCare_Setup_0.15.10-beta.exe</strong>.</span></li>
+            <li><span class="step-number">1</span><span data-i18n="step_1">Скачайте ShiftCare для Windows или Android.</span></li>
+            <li><span class="step-number">2</span><span data-i18n="step_2">Windows: запустите <strong>ShiftCare_Setup_0.15.11-beta.exe</strong>. Android: откройте APK на планшете и разрешите установку.</span></li>
             <li><span class="step-number">3</span><span data-i18n="step_3">После установки войдите в организацию или создайте новую рабочую базу.</span></li>
           </ol>
         </aside>
       </div>
 
       <div class="footer">
-        <span><span class="status" data-i18n="ready">Готово к установке</span> <span data-i18n="windows">на Windows 10/11.</span></span>
+        <span><span class="status" data-i18n="ready">Готово к установке</span> <span data-i18n="windows">на Windows 10/11 и Android.</span></span>
         <a href="https://portal.shiftcare.co.il/login" data-i18n="portal">Портал сотрудников</a>
       </div>
     </section>
   </main>
 
   <script>
-    const INSTALLER_NAME = "ShiftCare_Setup_0.15.10-beta.exe";
+    const INSTALLER_NAME = "ShiftCare_Setup_0.15.11-beta.exe";
+    const ANDROID_NAME = "ShiftCare_Android_0.15.11-beta.apk";
     const translations = {
       ru: {
         title: "ShiftCare - скачать программу",
-        description: "Скачать ShiftCare для Windows. Локальное рабочее пространство расписаний для команд ухода.",
-        subtitle: "Windows beta",
+        description: "Скачать ShiftCare для Windows и Android. Локальное рабочее пространство расписаний для команд ухода.",
+        subtitle: "Windows и Android beta",
         lead: "Локальное рабочее пространство расписаний для домов престарелых и команд ухода. Программа работает на компьютере, а облако используется для входа сотрудников и резервных данных.",
         download: "Скачать для Windows",
+        download_android: "Скачать для Android",
         release: "Открыть релиз",
         version_label: "Текущая версия:",
         install_title: "Установка",
-        step_1: "Скачайте установщик ShiftCare для Windows.",
-        step_2: `Запустите файл <strong>${INSTALLER_NAME}</strong>.`,
+        step_1: "Скачайте ShiftCare для Windows или Android.",
+        step_2: `Windows: запустите <strong>${INSTALLER_NAME}</strong>. Android: откройте <strong>${ANDROID_NAME}</strong> на планшете и разрешите установку.`,
         step_3: "После установки войдите в организацию или создайте новую рабочую базу.",
         ready: "Готово к установке",
-        windows: "на Windows 10/11.",
+        windows: "на Windows 10/11 и Android.",
         portal: "Портал сотрудников"
       },
       he: {
         title: "ShiftCare - הורדת התוכנה",
-        description: "הורדת ShiftCare ל-Windows. סביבת עבודה מקומית לסידורי עבודה בצוותי טיפול.",
-        subtitle: "בטא ל-Windows",
+        description: "הורדת ShiftCare ל-Windows ול-Android. סביבת עבודה מקומית לסידורי עבודה בצוותי טיפול.",
+        subtitle: "בטא ל-Windows ול-Android",
         lead: "סביבת עבודה מקומית לסידורי עבודה בבתי אבות ובצוותי טיפול. התוכנה עובדת על המחשב, והענן משמש לכניסת עובדים ולגיבוי נתונים.",
         download: "הורדה ל-Windows",
+        download_android: "הורדה ל-Android",
         release: "פתיחת גרסה",
         version_label: "גרסה נוכחית:",
         install_title: "התקנה",
-        step_1: "הורד את קובץ ההתקנה של ShiftCare ל-Windows.",
-        step_2: `הפעל את הקובץ <strong>${INSTALLER_NAME}</strong>.`,
+        step_1: "הורד את ShiftCare ל-Windows או ל-Android.",
+        step_2: `Windows: הפעל את <strong>${INSTALLER_NAME}</strong>. Android: פתח את <strong>${ANDROID_NAME}</strong> בטאבלט ואשר התקנה.`,
         step_3: "לאחר ההתקנה התחבר לארגון או צור סביבת עבודה חדשה.",
         ready: "מוכן להתקנה",
-        windows: "ב-Windows 10/11.",
+        windows: "ב-Windows 10/11 וב-Android.",
         portal: "פורטל עובדים"
       },
       en: {
-        title: "ShiftCare - download for Windows",
-        description: "Download ShiftCare for Windows. A local scheduling workspace for care teams.",
-        subtitle: "Windows beta",
+        title: "ShiftCare - download for Windows and Android",
+        description: "Download ShiftCare for Windows and Android. A local scheduling workspace for care teams.",
+        subtitle: "Windows and Android beta",
         lead: "A local scheduling workspace for nursing homes and care teams. The program runs on the computer, while the cloud is used for employee access and backup data.",
         download: "Download for Windows",
+        download_android: "Download for Android",
         release: "Open release",
         version_label: "Current version:",
         install_title: "Installation",
-        step_1: "Download the ShiftCare installer for Windows.",
-        step_2: `Run <strong>${INSTALLER_NAME}</strong>.`,
+        step_1: "Download ShiftCare for Windows or Android.",
+        step_2: `Windows: run <strong>${INSTALLER_NAME}</strong>. Android: open <strong>${ANDROID_NAME}</strong> on the tablet and allow installation.`,
         step_3: "After installation, sign in to an organization or create a new workspace.",
         ready: "Ready to install",
-        windows: "on Windows 10/11.",
+        windows: "on Windows 10/11 and Android.",
         portal: "Employee portal"
       }
     };
