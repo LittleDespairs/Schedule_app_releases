@@ -39,7 +39,7 @@
     }
 
     .shell {
-      width: min(920px, 100%);
+      width: min(940px, 100%);
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -47,11 +47,46 @@
       overflow: hidden;
     }
 
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      padding: 18px 28px 0;
+    }
+
+    .language-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(19, 30, 55, 0.08);
+    }
+
+    .language-button {
+      min-width: 72px;
+      min-height: 36px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .language-button[aria-pressed="true"] {
+      background: var(--primary);
+      color: #fff;
+    }
+
     .hero {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 24px;
-      padding: 44px;
+      padding: 32px 44px 44px;
       align-items: center;
     }
 
@@ -67,6 +102,7 @@
       height: 58px;
       display: grid;
       place-items: center;
+      flex: 0 0 auto;
       border-radius: 14px;
       background: var(--primary);
       color: #fff;
@@ -173,6 +209,10 @@
       line-height: 1.45;
     }
 
+    [dir="rtl"] .steps li {
+      grid-template-columns: 1fr 28px;
+    }
+
     .step-number {
       display: grid;
       place-items: center;
@@ -209,6 +249,25 @@
     }
 
     @media (max-width: 760px) {
+      main {
+        padding: 18px 12px;
+      }
+
+      .topbar {
+        justify-content: center;
+        padding: 18px 18px 0;
+      }
+
+      .language-switcher {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .language-button {
+        min-width: 0;
+        flex: 1;
+      }
+
       .hero {
         grid-template-columns: 1fr;
         padding: 28px;
@@ -236,48 +295,144 @@
 <body>
   <main>
     <section class="shell" aria-labelledby="title">
+      <div class="topbar" aria-label="Language">
+        <div class="language-switcher">
+          <button class="language-button" type="button" data-lang="ru" aria-pressed="true">Русский</button>
+          <button class="language-button" type="button" data-lang="he" aria-pressed="false">עברית</button>
+          <button class="language-button" type="button" data-lang="en" aria-pressed="false">English</button>
+        </div>
+      </div>
+
       <div class="hero">
         <div>
           <div class="brand">
             <div class="logo" aria-hidden="true">SC</div>
             <div>
               <h1 id="title">ShiftCare</h1>
-              <p>Windows beta</p>
+              <p data-i18n="subtitle">Windows beta</p>
             </div>
           </div>
 
-          <p class="lead">
+          <p class="lead" data-i18n="lead">
             Локальное рабочее пространство расписаний для домов престарелых и команд ухода.
             Программа работает на компьютере, а облако используется для входа сотрудников и резервных данных.
           </p>
 
           <div class="actions">
-            <a class="button button-primary" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/download/v0.15.10-beta/ShiftCare_Setup_0.15.10-beta.exe">
+            <a class="button button-primary" data-i18n="download" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/download/v0.15.10-beta/ShiftCare_Setup_0.15.10-beta.exe">
               Скачать для Windows
             </a>
-            <a class="button button-secondary" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/tag/v0.15.10-beta">
+            <a class="button button-secondary" data-i18n="release" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/tag/v0.15.10-beta">
               Открыть релиз
             </a>
           </div>
 
-          <div class="version">Текущая версия: <strong>0.15.10 beta</strong></div>
+          <div class="version"><span data-i18n="version_label">Текущая версия:</span> <strong>0.15.10 beta</strong></div>
         </div>
 
-        <aside class="panel" aria-label="Как установить">
-          <h2>Установка</h2>
+        <aside class="panel" aria-label="Installation">
+          <h2 data-i18n="install_title">Установка</h2>
           <ol class="steps">
-            <li><span class="step-number">1</span><span>Скачайте установщик ShiftCare для Windows.</span></li>
-            <li><span class="step-number">2</span><span>Запустите файл <strong>ShiftCare_Setup_0.15.10-beta.exe</strong>.</span></li>
-            <li><span class="step-number">3</span><span>После установки войдите в организацию или создайте новую рабочую базу.</span></li>
+            <li><span class="step-number">1</span><span data-i18n="step_1">Скачайте установщик ShiftCare для Windows.</span></li>
+            <li><span class="step-number">2</span><span data-i18n="step_2">Запустите файл <strong>ShiftCare_Setup_0.15.10-beta.exe</strong>.</span></li>
+            <li><span class="step-number">3</span><span data-i18n="step_3">После установки войдите в организацию или создайте новую рабочую базу.</span></li>
           </ol>
         </aside>
       </div>
 
       <div class="footer">
-        <span><span class="status">Готово к установке</span> на Windows 10/11.</span>
-        <a href="https://portal.shiftcare.co.il/login">Портал сотрудников</a>
+        <span><span class="status" data-i18n="ready">Готово к установке</span> <span data-i18n="windows">на Windows 10/11.</span></span>
+        <a href="https://portal.shiftcare.co.il/login" data-i18n="portal">Портал сотрудников</a>
       </div>
     </section>
   </main>
+
+  <script>
+    const INSTALLER_NAME = "ShiftCare_Setup_0.15.10-beta.exe";
+    const translations = {
+      ru: {
+        title: "ShiftCare - скачать программу",
+        description: "Скачать ShiftCare для Windows. Локальное рабочее пространство расписаний для команд ухода.",
+        subtitle: "Windows beta",
+        lead: "Локальное рабочее пространство расписаний для домов престарелых и команд ухода. Программа работает на компьютере, а облако используется для входа сотрудников и резервных данных.",
+        download: "Скачать для Windows",
+        release: "Открыть релиз",
+        version_label: "Текущая версия:",
+        install_title: "Установка",
+        step_1: "Скачайте установщик ShiftCare для Windows.",
+        step_2: `Запустите файл <strong>${INSTALLER_NAME}</strong>.`,
+        step_3: "После установки войдите в организацию или создайте новую рабочую базу.",
+        ready: "Готово к установке",
+        windows: "на Windows 10/11.",
+        portal: "Портал сотрудников"
+      },
+      he: {
+        title: "ShiftCare - הורדת התוכנה",
+        description: "הורדת ShiftCare ל-Windows. סביבת עבודה מקומית לסידורי עבודה בצוותי טיפול.",
+        subtitle: "בטא ל-Windows",
+        lead: "סביבת עבודה מקומית לסידורי עבודה בבתי אבות ובצוותי טיפול. התוכנה עובדת על המחשב, והענן משמש לכניסת עובדים ולגיבוי נתונים.",
+        download: "הורדה ל-Windows",
+        release: "פתיחת גרסה",
+        version_label: "גרסה נוכחית:",
+        install_title: "התקנה",
+        step_1: "הורד את קובץ ההתקנה של ShiftCare ל-Windows.",
+        step_2: `הפעל את הקובץ <strong>${INSTALLER_NAME}</strong>.`,
+        step_3: "לאחר ההתקנה התחבר לארגון או צור סביבת עבודה חדשה.",
+        ready: "מוכן להתקנה",
+        windows: "ב-Windows 10/11.",
+        portal: "פורטל עובדים"
+      },
+      en: {
+        title: "ShiftCare - download for Windows",
+        description: "Download ShiftCare for Windows. A local scheduling workspace for care teams.",
+        subtitle: "Windows beta",
+        lead: "A local scheduling workspace for nursing homes and care teams. The program runs on the computer, while the cloud is used for employee access and backup data.",
+        download: "Download for Windows",
+        release: "Open release",
+        version_label: "Current version:",
+        install_title: "Installation",
+        step_1: "Download the ShiftCare installer for Windows.",
+        step_2: `Run <strong>${INSTALLER_NAME}</strong>.`,
+        step_3: "After installation, sign in to an organization or create a new workspace.",
+        ready: "Ready to install",
+        windows: "on Windows 10/11.",
+        portal: "Employee portal"
+      }
+    };
+
+    function preferredLanguage() {
+      const saved = localStorage.getItem("shiftcareDownloadLang");
+      if (saved && translations[saved]) return saved;
+      const browserLang = (navigator.language || "").toLowerCase();
+      if (browserLang.startsWith("he")) return "he";
+      if (browserLang.startsWith("ru")) return "ru";
+      return "en";
+    }
+
+    function setLanguage(lang) {
+      const nextLang = translations[lang] ? lang : "en";
+      const dict = translations[nextLang];
+      document.documentElement.lang = nextLang;
+      document.documentElement.dir = nextLang === "he" ? "rtl" : "ltr";
+      document.title = dict.title;
+      document.querySelector("meta[name='description']").setAttribute("content", dict.description);
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const key = element.dataset.i18n;
+        if (dict[key]) {
+          element.innerHTML = dict[key];
+        }
+      });
+      document.querySelectorAll("[data-lang]").forEach((button) => {
+        button.setAttribute("aria-pressed", button.dataset.lang === nextLang ? "true" : "false");
+      });
+      localStorage.setItem("shiftcareDownloadLang", nextLang);
+    }
+
+    document.querySelectorAll("[data-lang]").forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.lang));
+    });
+
+    setLanguage(preferredLanguage());
+  </script>
 </body>
 </html>
