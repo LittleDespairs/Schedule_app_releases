@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ShiftCare - скачать программу</title>
-  <meta name="description" content="Скачать ShiftCare для Windows и Android. Локальное рабочее пространство расписаний для команд ухода.">
+  <meta name="description" content="Скачать актуальную версию ShiftCare для Windows.">
   <style>
     :root {
       color-scheme: light;
@@ -17,6 +17,7 @@
       --primary-dark: #2148b8;
       --soft: #eef4ff;
       --success: #138a4a;
+      --danger: #b42318;
     }
 
     * {
@@ -174,10 +175,34 @@
       border-color: var(--line);
     }
 
+    .button-disabled,
+    .button-disabled:hover {
+      pointer-events: none;
+      transform: none;
+      background: #d7dfed;
+      color: #60718f;
+      box-shadow: none;
+    }
+
     .version {
       margin-top: 18px;
       color: var(--muted);
       font-size: 14px;
+    }
+
+    .version strong {
+      color: var(--text);
+    }
+
+    .status-line {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status-line.error {
+      color: var(--danger);
+      font-weight: 700;
     }
 
     .panel {
@@ -243,7 +268,7 @@
       text-decoration: none;
     }
 
-    .status {
+    .ready {
       color: var(--success);
       font-weight: 800;
     }
@@ -309,7 +334,7 @@
             <div class="logo" aria-hidden="true">SC</div>
             <div>
               <h1 id="title">ShiftCare</h1>
-              <p data-i18n="subtitle">Windows и Android beta</p>
+              <p data-i18n="subtitle">Windows beta</p>
             </div>
           </div>
 
@@ -319,90 +344,112 @@
           </p>
 
           <div class="actions">
-            <a class="button button-primary" data-i18n="download" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/download/v0.15.11-beta/ShiftCare_Setup_0.15.11-beta.exe">
-              Скачать для Windows
+            <a id="downloadLink" class="button button-primary button-disabled" data-i18n="download_loading" href="#" aria-disabled="true">
+              Проверяю актуальную версию...
             </a>
-            <a class="button button-secondary" data-i18n="download_android" href="/downloads/ShiftCare_Android_0.15.11-beta.apk" download>
-              Скачать для Android
-            </a>
-            <a class="button button-secondary" data-i18n="release" href="https://github.com/LittleDespairs/Schedule_app_releases/releases/tag/v0.15.11-beta">
-              Открыть релиз
+            <a id="releaseLink" class="button button-secondary button-disabled" data-i18n="release_loading" href="#" aria-disabled="true">
+              Релиз
             </a>
           </div>
 
-          <div class="version"><span data-i18n="version_label">Текущая версия:</span> <strong>0.15.11 beta</strong></div>
+          <div class="version">
+            <span data-i18n="version_label">Текущая версия:</span>
+            <strong id="versionValue" data-i18n="version_loading">проверяется</strong>
+          </div>
+          <div id="statusLine" class="status-line" data-i18n="status_loading">Получаю список релизов с GitHub.</div>
         </div>
 
         <aside class="panel" aria-label="Installation">
           <h2 data-i18n="install_title">Установка</h2>
           <ol class="steps">
-            <li><span class="step-number">1</span><span data-i18n="step_1">Скачайте ShiftCare для Windows или Android.</span></li>
-            <li><span class="step-number">2</span><span data-i18n="step_2">Windows: запустите <strong>ShiftCare_Setup_0.15.11-beta.exe</strong>. Android: откройте APK на планшете и разрешите установку.</span></li>
+            <li><span class="step-number">1</span><span data-i18n="step_1">Скачайте последний установщик ShiftCare для Windows.</span></li>
+            <li><span class="step-number">2</span><span id="installerStep" data-i18n="step_2_loading">После проверки версии запустите скачанный файл.</span></li>
             <li><span class="step-number">3</span><span data-i18n="step_3">После установки войдите в организацию или создайте новую рабочую базу.</span></li>
           </ol>
         </aside>
       </div>
 
       <div class="footer">
-        <span><span class="status" data-i18n="ready">Готово к установке</span> <span data-i18n="windows">на Windows 10/11 и Android.</span></span>
+        <span><span class="ready" data-i18n="ready">Загружается только последний Windows-релиз</span> <span data-i18n="windows">из GitHub Releases.</span></span>
         <a href="https://portal.shiftcare.co.il/login" data-i18n="portal">Портал сотрудников</a>
       </div>
     </section>
   </main>
 
   <script>
-    const INSTALLER_NAME = "ShiftCare_Setup_0.15.11-beta.exe";
-    const ANDROID_NAME = "ShiftCare_Android_0.15.11-beta.apk";
+    const RELEASES_API = "https://api.github.com/repos/LittleDespairs/Schedule_app_releases/releases?per_page=30";
+    const INSTALLER_PATTERN = /^ShiftCare_Setup_(\d+)\.(\d+)\.(\d+)(?:[-_]([A-Za-z0-9.]+))?\.exe$/i;
+    let currentLang = "ru";
+    let latestInstaller = null;
+
     const translations = {
       ru: {
         title: "ShiftCare - скачать программу",
-        description: "Скачать ShiftCare для Windows и Android. Локальное рабочее пространство расписаний для команд ухода.",
-        subtitle: "Windows и Android beta",
+        description: "Скачать актуальную версию ShiftCare для Windows.",
+        subtitle: "Windows beta",
         lead: "Локальное рабочее пространство расписаний для домов престарелых и команд ухода. Программа работает на компьютере, а облако используется для входа сотрудников и резервных данных.",
-        download: "Скачать для Windows",
-        download_android: "Скачать для Android",
-        release: "Открыть релиз",
+        download_loading: "Проверяю актуальную версию...",
+        download_ready: "Скачать последнюю версию",
+        release_loading: "Релиз",
+        release_ready: "Открыть релиз",
         version_label: "Текущая версия:",
+        version_loading: "проверяется",
+        status_loading: "Получаю список релизов с GitHub.",
+        status_ready: "Ссылка обновлена автоматически по последнему опубликованному установщику.",
+        status_error: "Не удалось получить актуальную версию. Обновите страницу через несколько минут.",
         install_title: "Установка",
-        step_1: "Скачайте ShiftCare для Windows или Android.",
-        step_2: `Windows: запустите <strong>${INSTALLER_NAME}</strong>. Android: откройте <strong>${ANDROID_NAME}</strong> на планшете и разрешите установку.`,
+        step_1: "Скачайте последний установщик ShiftCare для Windows.",
+        step_2_loading: "После проверки версии запустите скачанный файл.",
+        step_2_ready: "Запустите файл <strong>{installer}</strong>.",
         step_3: "После установки войдите в организацию или создайте новую рабочую базу.",
-        ready: "Готово к установке",
-        windows: "на Windows 10/11 и Android.",
+        ready: "Загружается только последний Windows-релиз",
+        windows: "из GitHub Releases.",
         portal: "Портал сотрудников"
       },
       he: {
         title: "ShiftCare - הורדת התוכנה",
-        description: "הורדת ShiftCare ל-Windows ול-Android. סביבת עבודה מקומית לסידורי עבודה בצוותי טיפול.",
-        subtitle: "בטא ל-Windows ול-Android",
+        description: "הורדת הגרסה העדכנית של ShiftCare ל-Windows.",
+        subtitle: "בטא ל-Windows",
         lead: "סביבת עבודה מקומית לסידורי עבודה בבתי אבות ובצוותי טיפול. התוכנה עובדת על המחשב, והענן משמש לכניסת עובדים ולגיבוי נתונים.",
-        download: "הורדה ל-Windows",
-        download_android: "הורדה ל-Android",
-        release: "פתיחת גרסה",
+        download_loading: "בודק את הגרסה העדכנית...",
+        download_ready: "הורדת הגרסה האחרונה",
+        release_loading: "גרסה",
+        release_ready: "פתיחת גרסה",
         version_label: "גרסה נוכחית:",
+        version_loading: "נבדקת",
+        status_loading: "מקבל את רשימת הגרסאות מ-GitHub.",
+        status_ready: "הקישור עודכן אוטומטית לפי קובץ ההתקנה האחרון שפורסם.",
+        status_error: "לא ניתן לקבל את הגרסה העדכנית. רענן את הדף בעוד כמה דקות.",
         install_title: "התקנה",
-        step_1: "הורד את ShiftCare ל-Windows או ל-Android.",
-        step_2: `Windows: הפעל את <strong>${INSTALLER_NAME}</strong>. Android: פתח את <strong>${ANDROID_NAME}</strong> בטאבלט ואשר התקנה.`,
+        step_1: "הורד את קובץ ההתקנה האחרון של ShiftCare ל-Windows.",
+        step_2_loading: "לאחר בדיקת הגרסה הפעל את הקובץ שהורד.",
+        step_2_ready: "הפעל את הקובץ <strong>{installer}</strong>.",
         step_3: "לאחר ההתקנה התחבר לארגון או צור סביבת עבודה חדשה.",
-        ready: "מוכן להתקנה",
-        windows: "ב-Windows 10/11 וב-Android.",
+        ready: "מורידים רק את גרסת Windows האחרונה",
+        windows: "מתוך GitHub Releases.",
         portal: "פורטל עובדים"
       },
       en: {
-        title: "ShiftCare - download for Windows and Android",
-        description: "Download ShiftCare for Windows and Android. A local scheduling workspace for care teams.",
-        subtitle: "Windows and Android beta",
+        title: "ShiftCare - download for Windows",
+        description: "Download the latest ShiftCare version for Windows.",
+        subtitle: "Windows beta",
         lead: "A local scheduling workspace for nursing homes and care teams. The program runs on the computer, while the cloud is used for employee access and backup data.",
-        download: "Download for Windows",
-        download_android: "Download for Android",
-        release: "Open release",
+        download_loading: "Checking the latest version...",
+        download_ready: "Download latest version",
+        release_loading: "Release",
+        release_ready: "Open release",
         version_label: "Current version:",
+        version_loading: "checking",
+        status_loading: "Fetching releases from GitHub.",
+        status_ready: "The link was updated automatically from the latest published installer.",
+        status_error: "Could not fetch the latest version. Refresh the page in a few minutes.",
         install_title: "Installation",
-        step_1: "Download ShiftCare for Windows or Android.",
-        step_2: `Windows: run <strong>${INSTALLER_NAME}</strong>. Android: open <strong>${ANDROID_NAME}</strong> on the tablet and allow installation.`,
+        step_1: "Download the latest ShiftCare installer for Windows.",
+        step_2_loading: "After the version check, run the downloaded file.",
+        step_2_ready: "Run <strong>{installer}</strong>.",
         step_3: "After installation, sign in to an organization or create a new workspace.",
-        ready: "Ready to install",
-        windows: "on Windows 10/11 and Android.",
+        ready: "Only the latest Windows release is downloaded",
+        windows: "from GitHub Releases.",
         portal: "Employee portal"
       }
     };
@@ -416,11 +463,66 @@
       return "en";
     }
 
+    function versionFromAsset(assetName) {
+      const match = assetName.match(INSTALLER_PATTERN);
+      if (!match) return null;
+      return {
+        major: Number(match[1]),
+        minor: Number(match[2]),
+        patch: Number(match[3]),
+        label: `${match[1]}.${match[2]}.${match[3]}${match[4] ? `-${match[4]}` : ""}`
+      };
+    }
+
+    function compareVersions(a, b) {
+      return a.major - b.major || a.minor - b.minor || a.patch - b.patch;
+    }
+
+    function findLatestInstaller(releases) {
+      return releases.flatMap((release) => {
+        return (release.assets || []).map((asset) => {
+          const version = versionFromAsset(asset.name || "");
+          if (!version || !asset.browser_download_url) return null;
+          return {
+            version,
+            assetName: asset.name,
+            downloadUrl: asset.browser_download_url,
+            releaseUrl: release.html_url,
+            publishedAt: release.published_at
+          };
+        }).filter(Boolean);
+      }).sort((a, b) => compareVersions(b.version, a.version))[0] || null;
+    }
+
+    function setDynamicText() {
+      const dict = translations[currentLang];
+      const downloadLink = document.getElementById("downloadLink");
+      const releaseLink = document.getElementById("releaseLink");
+      const versionValue = document.getElementById("versionValue");
+      const statusLine = document.getElementById("statusLine");
+      const installerStep = document.getElementById("installerStep");
+
+      if (!latestInstaller) {
+        downloadLink.textContent = dict.download_loading;
+        releaseLink.textContent = dict.release_loading;
+        versionValue.textContent = dict.version_loading;
+        statusLine.textContent = dict.status_loading;
+        installerStep.innerHTML = dict.step_2_loading;
+        return;
+      }
+
+      downloadLink.textContent = dict.download_ready;
+      releaseLink.textContent = dict.release_ready;
+      versionValue.textContent = latestInstaller.version.label;
+      statusLine.textContent = dict.status_ready;
+      installerStep.innerHTML = dict.step_2_ready.replace("{installer}", latestInstaller.assetName);
+    }
+
     function setLanguage(lang) {
-      const nextLang = translations[lang] ? lang : "en";
-      const dict = translations[nextLang];
-      document.documentElement.lang = nextLang;
-      document.documentElement.dir = nextLang === "he" ? "rtl" : "ltr";
+      currentLang = translations[lang] ? lang : "en";
+      const dict = translations[currentLang];
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = currentLang === "he" ? "rtl" : "ltr";
       document.title = dict.title;
       document.querySelector("meta[name='description']").setAttribute("content", dict.description);
       document.querySelectorAll("[data-i18n]").forEach((element) => {
@@ -430,9 +532,50 @@
         }
       });
       document.querySelectorAll("[data-lang]").forEach((button) => {
-        button.setAttribute("aria-pressed", button.dataset.lang === nextLang ? "true" : "false");
+        button.setAttribute("aria-pressed", button.dataset.lang === currentLang ? "true" : "false");
       });
-      localStorage.setItem("shiftcareDownloadLang", nextLang);
+      setDynamicText();
+      localStorage.setItem("shiftcareDownloadLang", currentLang);
+    }
+
+    function enableDownload(installer) {
+      latestInstaller = installer;
+      const downloadLink = document.getElementById("downloadLink");
+      const releaseLink = document.getElementById("releaseLink");
+      downloadLink.href = installer.downloadUrl;
+      downloadLink.removeAttribute("aria-disabled");
+      downloadLink.classList.remove("button-disabled");
+      releaseLink.href = installer.releaseUrl;
+      releaseLink.removeAttribute("aria-disabled");
+      releaseLink.classList.remove("button-disabled");
+      setDynamicText();
+    }
+
+    function showReleaseError() {
+      const dict = translations[currentLang];
+      const statusLine = document.getElementById("statusLine");
+      const downloadLink = document.getElementById("downloadLink");
+      const releaseLink = document.getElementById("releaseLink");
+      statusLine.textContent = dict.status_error;
+      statusLine.classList.add("error");
+      downloadLink.textContent = dict.status_error;
+      releaseLink.textContent = dict.release_loading;
+    }
+
+    async function loadLatestRelease() {
+      try {
+        const response = await fetch(`${RELEASES_API}&t=${Date.now()}`, {
+          headers: { "Accept": "application/vnd.github+json" },
+          cache: "no-store"
+        });
+        if (!response.ok) throw new Error(`GitHub Releases returned ${response.status}`);
+        const installer = findLatestInstaller(await response.json());
+        if (!installer) throw new Error("No ShiftCare installer asset found");
+        enableDownload(installer);
+      } catch (error) {
+        console.error(error);
+        showReleaseError();
+      }
     }
 
     document.querySelectorAll("[data-lang]").forEach((button) => {
@@ -440,6 +583,7 @@
     });
 
     setLanguage(preferredLanguage());
+    loadLatestRelease();
   </script>
 </body>
 </html>
