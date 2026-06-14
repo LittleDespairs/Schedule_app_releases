@@ -175,6 +175,16 @@
       border-color: var(--line);
     }
 
+    .button-demo {
+      background: #111827;
+      color: #fff;
+      border-color: #111827;
+    }
+
+    .button-demo:hover {
+      background: #0f172a;
+    }
+
     .button-disabled,
     .button-disabled:hover {
       pointer-events: none;
@@ -347,6 +357,9 @@
             <a id="downloadLink" class="button button-primary button-disabled" data-i18n="download_loading" href="#" aria-disabled="true">
               Проверяю актуальную версию...
             </a>
+            <a id="demoDownloadLink" class="button button-demo button-disabled" data-i18n="demo_download_loading" href="#" aria-disabled="true">
+              Проверяю демо версию...
+            </a>
             <a id="releaseLink" class="button button-secondary button-disabled" data-i18n="release_loading" href="#" aria-disabled="true">
               Релиз
             </a>
@@ -357,6 +370,7 @@
             <strong id="versionValue" data-i18n="version_loading">проверяется</strong>
           </div>
           <div id="statusLine" class="status-line" data-i18n="status_loading">Получаю список релизов с GitHub.</div>
+          <div id="demoStatusLine" class="status-line" data-i18n="demo_status_loading">Получаю демо релиз с GitHub.</div>
         </div>
 
         <aside class="panel" aria-label="Installation">
@@ -378,9 +392,12 @@
 
   <script>
     const RELEASES_API = "https://api.github.com/repos/LittleDespairs/Schedule_app_releases/releases?per_page=30";
+    const DEMO_RELEASES_API = "https://api.github.com/repos/LittleDespairs/ShiftCare-Demo-Beta/releases?per_page=30";
     const INSTALLER_PATTERN = /^ShiftCare_Setup_(\d+)\.(\d+)\.(\d+)(?:[-_]([A-Za-z0-9.]+))?\.exe$/i;
+    const DEMO_INSTALLER_PATTERN = /^ShiftCare_Demo_Setup_(\d+)\.(\d+)\.(\d+)(?:[-_]([A-Za-z0-9.]+))?\.exe$/i;
     let currentLang = "ru";
     let latestInstaller = null;
+    let latestDemoInstaller = null;
 
     const translations = {
       ru: {
@@ -390,6 +407,8 @@
         lead: "Локальное рабочее пространство расписаний для домов престарелых и команд ухода. Программа работает на компьютере, а облако используется для входа сотрудников и резервных данных.",
         download_loading: "Проверяю актуальную версию...",
         download_ready: "Скачать последнюю версию",
+        demo_download_loading: "Проверяю демо версию...",
+        demo_download_ready: "Скачать демо версию",
         release_loading: "Релиз",
         release_ready: "Открыть релиз",
         version_label: "Текущая версия:",
@@ -397,6 +416,9 @@
         status_loading: "Получаю список релизов с GitHub.",
         status_ready: "Ссылка обновлена автоматически по последнему опубликованному установщику.",
         status_error: "Не удалось получить актуальную версию. Обновите страницу через несколько минут.",
+        demo_status_loading: "Получаю демо релиз с GitHub.",
+        demo_status_ready: "Демо версия ограничена для показа функционала и не предназначена для полноценного составления расписаний.",
+        demo_status_error: "Демо установщик пока недоступен. Проверьте страницу позже.",
         install_title: "Установка",
         step_1: "Скачайте последний установщик ShiftCare для Windows.",
         step_2_loading: "После проверки версии запустите скачанный файл.",
@@ -413,6 +435,8 @@
         lead: "סביבת עבודה מקומית לסידורי עבודה בבתי אבות ובצוותי טיפול. התוכנה עובדת על המחשב, והענן משמש לכניסת עובדים ולגיבוי נתונים.",
         download_loading: "בודק את הגרסה העדכנית...",
         download_ready: "הורדת הגרסה האחרונה",
+        demo_download_loading: "בודק את גרסת ההדגמה...",
+        demo_download_ready: "הורדת גרסת הדגמה",
         release_loading: "גרסה",
         release_ready: "פתיחת גרסה",
         version_label: "גרסה נוכחית:",
@@ -420,6 +444,9 @@
         status_loading: "מקבל את רשימת הגרסאות מ-GitHub.",
         status_ready: "הקישור עודכן אוטומטית לפי קובץ ההתקנה האחרון שפורסם.",
         status_error: "לא ניתן לקבל את הגרסה העדכנית. רענן את הדף בעוד כמה דקות.",
+        demo_status_loading: "מקבל את גרסת ההדגמה מ-GitHub.",
+        demo_status_ready: "גרסת ההדגמה מוגבלת להצגת היכולות ואינה מיועדת לבניית סידורי עבודה מלאים.",
+        demo_status_error: "קובץ ההתקנה של ההדגמה עדיין אינו זמין. בדוק שוב מאוחר יותר.",
         install_title: "התקנה",
         step_1: "הורד את קובץ ההתקנה האחרון של ShiftCare ל-Windows.",
         step_2_loading: "לאחר בדיקת הגרסה הפעל את הקובץ שהורד.",
@@ -436,6 +463,8 @@
         lead: "A local scheduling workspace for nursing homes and care teams. The program runs on the computer, while the cloud is used for employee access and backup data.",
         download_loading: "Checking the latest version...",
         download_ready: "Download latest version",
+        demo_download_loading: "Checking demo version...",
+        demo_download_ready: "Download demo version",
         release_loading: "Release",
         release_ready: "Open release",
         version_label: "Current version:",
@@ -443,6 +472,9 @@
         status_loading: "Fetching releases from GitHub.",
         status_ready: "The link was updated automatically from the latest published installer.",
         status_error: "Could not fetch the latest version. Refresh the page in a few minutes.",
+        demo_status_loading: "Fetching demo release from GitHub.",
+        demo_status_ready: "The demo version is limited for feature walkthroughs and is not intended for production scheduling.",
+        demo_status_error: "Demo installer is not available yet. Check this page again later.",
         install_title: "Installation",
         step_1: "Download the latest ShiftCare installer for Windows.",
         step_2_loading: "After the version check, run the downloaded file.",
@@ -463,8 +495,8 @@
       return "en";
     }
 
-    function versionFromAsset(assetName) {
-      const match = assetName.match(INSTALLER_PATTERN);
+    function versionFromAsset(assetName, pattern = INSTALLER_PATTERN) {
+      const match = assetName.match(pattern);
       if (!match) return null;
       return {
         major: Number(match[1]),
@@ -478,10 +510,10 @@
       return a.major - b.major || a.minor - b.minor || a.patch - b.patch;
     }
 
-    function findLatestInstaller(releases) {
+    function findLatestInstaller(releases, pattern = INSTALLER_PATTERN) {
       return releases.flatMap((release) => {
         return (release.assets || []).map((asset) => {
-          const version = versionFromAsset(asset.name || "");
+          const version = versionFromAsset(asset.name || "", pattern);
           if (!version || !asset.browser_download_url) return null;
           return {
             version,
@@ -497,9 +529,11 @@
     function setDynamicText() {
       const dict = translations[currentLang];
       const downloadLink = document.getElementById("downloadLink");
+      const demoDownloadLink = document.getElementById("demoDownloadLink");
       const releaseLink = document.getElementById("releaseLink");
       const versionValue = document.getElementById("versionValue");
       const statusLine = document.getElementById("statusLine");
+      const demoStatusLine = document.getElementById("demoStatusLine");
       const installerStep = document.getElementById("installerStep");
 
       if (!latestInstaller) {
@@ -508,14 +542,21 @@
         versionValue.textContent = dict.version_loading;
         statusLine.textContent = dict.status_loading;
         installerStep.innerHTML = dict.step_2_loading;
-        return;
+      } else {
+        downloadLink.textContent = dict.download_ready;
+        releaseLink.textContent = dict.release_ready;
+        versionValue.textContent = latestInstaller.version.label;
+        statusLine.textContent = dict.status_ready;
+        installerStep.innerHTML = dict.step_2_ready.replace("{installer}", latestInstaller.assetName);
       }
 
-      downloadLink.textContent = dict.download_ready;
-      releaseLink.textContent = dict.release_ready;
-      versionValue.textContent = latestInstaller.version.label;
-      statusLine.textContent = dict.status_ready;
-      installerStep.innerHTML = dict.step_2_ready.replace("{installer}", latestInstaller.assetName);
+      if (!latestDemoInstaller) {
+        demoDownloadLink.textContent = dict.demo_download_loading;
+        demoStatusLine.textContent = dict.demo_status_loading;
+      } else {
+        demoDownloadLink.textContent = dict.demo_download_ready;
+        demoStatusLine.textContent = `${dict.demo_status_ready} (${latestDemoInstaller.version.label})`;
+      }
     }
 
     function setLanguage(lang) {
@@ -551,6 +592,15 @@
       setDynamicText();
     }
 
+    function enableDemoDownload(installer) {
+      latestDemoInstaller = installer;
+      const demoDownloadLink = document.getElementById("demoDownloadLink");
+      demoDownloadLink.href = installer.downloadUrl;
+      demoDownloadLink.removeAttribute("aria-disabled");
+      demoDownloadLink.classList.remove("button-disabled");
+      setDynamicText();
+    }
+
     function showReleaseError() {
       const dict = translations[currentLang];
       const statusLine = document.getElementById("statusLine");
@@ -562,19 +612,41 @@
       releaseLink.textContent = dict.release_loading;
     }
 
+    function showDemoReleaseError() {
+      const dict = translations[currentLang];
+      const demoStatusLine = document.getElementById("demoStatusLine");
+      const demoDownloadLink = document.getElementById("demoDownloadLink");
+      demoStatusLine.textContent = dict.demo_status_error;
+      demoStatusLine.classList.add("error");
+      demoDownloadLink.textContent = dict.demo_status_error;
+    }
+
+    async function loadRelease(apiUrl, pattern) {
+      const response = await fetch(`${apiUrl}&t=${Date.now()}`, {
+        headers: { "Accept": "application/vnd.github+json" },
+        cache: "no-store"
+      });
+      if (!response.ok) throw new Error(`GitHub Releases returned ${response.status}`);
+      const installer = findLatestInstaller(await response.json(), pattern);
+      if (!installer) throw new Error("No matching installer asset found");
+      return installer;
+    }
+
     async function loadLatestRelease() {
       try {
-        const response = await fetch(`${RELEASES_API}&t=${Date.now()}`, {
-          headers: { "Accept": "application/vnd.github+json" },
-          cache: "no-store"
-        });
-        if (!response.ok) throw new Error(`GitHub Releases returned ${response.status}`);
-        const installer = findLatestInstaller(await response.json());
-        if (!installer) throw new Error("No ShiftCare installer asset found");
-        enableDownload(installer);
+        enableDownload(await loadRelease(RELEASES_API, INSTALLER_PATTERN));
       } catch (error) {
         console.error(error);
         showReleaseError();
+      }
+    }
+
+    async function loadLatestDemoRelease() {
+      try {
+        enableDemoDownload(await loadRelease(DEMO_RELEASES_API, DEMO_INSTALLER_PATTERN));
+      } catch (error) {
+        console.error(error);
+        showDemoReleaseError();
       }
     }
 
@@ -584,6 +656,7 @@
 
     setLanguage(preferredLanguage());
     loadLatestRelease();
+    loadLatestDemoRelease();
   </script>
 </body>
 </html>
