@@ -4,7 +4,7 @@ Public release channel for Schedule App Windows installers.
 
 This repository stores release assets only. Source code remains private.
 
-Current release: `0.20.2-beta`
-Updated: 2026-06-17
+Current release: `0.20.3-beta`
+Updated: 2026-06-18
 
 Download page: https://download.shiftcare.co.il/
