@@ -4,6 +4,8 @@ Public Windows installer channel and download page for ShiftCare.
 
 Current release: **0.21.1 beta** (`v0.21.1-beta`) · Updated: 2026-09-11.
 
+The Windows files include the desktop synchronization correction under the same version and download URLs. Check the refreshed SHA-256 values in the release notes. The original release tag and Android debug build are unchanged.
+
 - [Download ShiftCare for Windows](https://github.com/LittleDespairs/Schedule_app_releases/releases/download/v0.21.1-beta/ShiftCare_Setup_0.21.1-beta.exe)
 - [Release notes and SHA-256 checksums](https://github.com/LittleDespairs/Schedule_app_releases/releases/tag/v0.21.1-beta)
 - [Download page](https://download.shiftcare.co.il/)
