@@ -374,6 +374,7 @@
           </div>
           <div id="statusLine" class="status-line" data-i18n="status_loading">Получаю список релизов с GitHub.</div>
           <div id="demoStatusLine" class="status-line" data-i18n="demo_status_loading">Получаю демо релиз с GitHub.</div>
+          <p class="status-line" data-i18n="signing_notice">Версия 0.21.1 beta не подписана. Встроенное обновление требует доверенной подписи и отклонит этот установщик. Перед установкой прочитайте примечания к релизу и сохраните резервную копию.</p>
         </div>
 
         <aside class="panel" aria-label="Installation">
@@ -422,6 +423,7 @@
         demo_status_loading: "Получаю демо релиз с GitHub.",
         demo_status_ready: "Демо версия ограничена для показа функционала и не предназначена для полноценного составления расписаний.",
         demo_status_error: "Демо установщик пока недоступен. Проверьте страницу позже.",
+        signing_notice: "Версия 0.21.1 beta не подписана. Встроенное обновление требует доверенной подписи и отклонит этот установщик. Перед установкой прочитайте примечания к релизу и сохраните резервную копию.",
         install_title: "Установка",
         step_1: "Скачайте последний установщик ShiftCare для Windows.",
         step_2_loading: "После проверки версии запустите скачанный файл.",
@@ -450,6 +452,7 @@
         demo_status_loading: "מקבל את גרסת ההדגמה מ-GitHub.",
         demo_status_ready: "גרסת ההדגמה מוגבלת להצגת היכולות ואינה מיועדת לבניית סידורי עבודה מלאים.",
         demo_status_error: "קובץ ההתקנה של ההדגמה עדיין אינו זמין. בדוק שוב מאוחר יותר.",
+        signing_notice: "גרסת 0.21.1 beta אינה חתומה. מנגנון העדכון דורש חתימה מהימנה וידחה את קובץ ההתקנה הזה. לפני ההתקנה קראו את הערות הגרסה ושמרו גיבוי.",
         install_title: "התקנה",
         step_1: "הורד את קובץ ההתקנה האחרון של ShiftCare ל-Windows.",
         step_2_loading: "לאחר בדיקת הגרסה הפעל את הקובץ שהורד.",
@@ -478,6 +481,7 @@
         demo_status_loading: "Fetching demo release from GitHub.",
         demo_status_ready: "The demo version is limited for feature walkthroughs and is not intended for production scheduling.",
         demo_status_error: "Demo installer is not available yet. Check this page again later.",
+        signing_notice: "Version 0.21.1 beta is unsigned. The in-app updater requires a trusted signature and will reject this installer. Read the release notes and keep a backup before installing.",
         install_title: "Installation",
         step_1: "Download the latest ShiftCare installer for Windows.",
         step_2_loading: "After the version check, run the downloaded file.",
@@ -515,6 +519,7 @@
 
     function findLatestInstaller(releases, pattern = INSTALLER_PATTERN) {
       return releases.flatMap((release) => {
+        if (release.draft) return [];
         return (release.assets || []).map((asset) => {
           const version = versionFromAsset(asset.name || "", pattern);
           if (!version || !asset.browser_download_url) return null;
