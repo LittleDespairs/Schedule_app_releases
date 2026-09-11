@@ -41,3 +41,11 @@ Download `SHA256SUMS.txt` alongside the installer to check the downloaded file. 
 This is a debug-signed tablet test build, not a production APK. A physical-device installation has not been validated. All 114 bundled application/resource files were compared with the final source; no working databases or private files are included.
 
 SHA256: `f4fe8239f5242ab82a3b55529209e54b44e4280803f90ce073f7687f2e2b6f51`
+
+## Publication status
+
+Published on 2026-09-11 as an explicitly approved unsigned Windows beta for manual distribution. The updater's trusted-signature requirement remains enabled; this release does not enable automatic installation of unsigned files. The Android asset in the standard release is explicitly labeled as a debug tablet build.
+
+The live employee portal at [portal.shiftcare.co.il](https://portal.shiftcare.co.il/login) and [schedule-app-beta.web.app](https://schedule-app-beta.web.app/login) was upgraded to `0.21.1_beta` before the installers were published. Liveness, readiness, and PostgreSQL connectivity checks passed.
+
+[Public source CI](https://github.com/LittleDespairs/ShiftCare-Demo-Beta/actions/runs/34632678203) passed for commit `ac95bf63bd397a9035fa5884b2320b53697e1af1`: Linux Python 3.12 and 3.13, plus Windows. The standard release points to its download-channel commit; the tested source snapshot is retained by the Demo release tag.
